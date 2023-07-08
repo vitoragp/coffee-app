@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:coffee_base_app/utils/async_call/async_call.dart';
 import 'package:coffee_base_app/constants.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 ///
 /// Typedefs
@@ -12,11 +15,29 @@ typedef ServerResponse = Future<Map<String, dynamic>>;
 ///
 
 class Server {
-  static ServerResponse cep(String cep) async {
+  ServerResponse cep(String cep) async {
     return await AsyncCall().host("viacep.com.br").get("ws/$cep/json");
   }
 
-  static ServerResponse appCheck() async {
-    return await AsyncCall().host(defaultHost).get(appCheckRoute);
+  ServerResponse appCheck(String? appToken) async {
+    late String model;
+    late String sn;
+
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      var info = await deviceInfo.androidInfo;
+      model = info.model;
+      sn = info.serialNumber;
+    } else {
+      var info = await deviceInfo.iosInfo;
+      model = info.model;
+      sn = info.identifierForVendor ?? "";
+    }
+
+    return await AsyncCall().host(defaultHost).body({
+      "appToken": appToken ?? "",
+      "model": model,
+      "sn": sn,
+    }).post(appCheckRoute);
   }
 }

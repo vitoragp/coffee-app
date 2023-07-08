@@ -17,4 +17,7 @@ const appCheckRoute = "app/check";
 /// Storage keys
 ///
 
-const userConfigurationKey = "user_configuration_k";
+class StorageKeys {
+  static const userConfiguration = "user_configuration_k";
+  static const appToken = "app_token_k";
+}

@@ -1,112 +1,68 @@
 {
   "success": {
-    "check": {
-      "data": {
-        "app/check": {
-          "http_success": true,
-          "body": {
-            "session_token": "45sdS-8fgcx0SDd54fs-1asd5C0s5-sd",
-            "version": "v1"
-          }
+    "data": {
+      "app/check": {
+        "http_success": true,
+        "body": {
+          "session_token": "45sdS-8fgcx0SDd54fs-1asd5C0s5-sd",
+          "version": "v1"
         }
-      }
-    },
-    "start_session": {
-      "data": {
-        "app/start_session": {
-          "http_success": true
+      },
+      "app/start_session": {
+        "http_success": true
+      },
+      "user/login": {
+        "http_success": true,
+        "body": {
+          "email": "john@email.com",
+          "first_name": "john",
+          "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
         }
-      }
-    },
-    "login": {
-      "data": {
-        "user/login": {
-          "http_success": true,
-          "body": {
-            "email": "john@email.com",
-            "first_name": "john",
-            "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
-          }
+      },
+      "user/has_password": {
+        "http_success": true,
+        "body": {
+          "exists": true
         }
-      }
-    },
-    "has_password_exist": {
-      "data": {
-        "user/has_password": {
-          "http_success": true,
-          "body": {
-            "exists": true
-          }
+      },
+      "user/forget_password": {
+        "http_success": true,
+        "body": {
+          "message": "Você recebera um email com instruções para recuperar sua senha!"
         }
-      }
-    },
-    "has_password_not_exist": {
-      "data": {
-        "user/has_password": {
-          "http_success": true,
-          "body": {
-            "exists": false
-          }
+      },
+      "user/register": {
+        "http_success": true,
+        "body": {
+          "email": "john@email.com",
+          "first_name": "john",
+          "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
         }
-      }
-    },
-    "forget_password": {
-      "data": {
-        "user/forget_password": {
-          "http_success": true,
-          "body": {
-            "message": "Você recebera um email com instruções para recuperar sua senha!"
-          }
+      },
+      "user/upload_image": {
+        "http_success": true,
+        "body": {
+          "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
         }
-      }
-    },
-    "register": {
-      "data": {
-        "user/register": {
-          "http_success": true,
-          "body": {
-            "email": "john@email.com",
-            "first_name": "john",
-            "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
-          }
+      },
+      "user/update": {
+        "http_success": true,
+        "body": {
+          "first_name": "John",
+          "last_name": "Wayne",
+          "cpf": "000.000.000-00",
+          "type": "inapp",
+          "gender": "Masculino",
+          "cep": "01001-000",
+          "street": "Praça da Sé",
+          "number": "s/n",
+          "neighborhood": "Sé",
+          "city": "São Paulo",
+          "state": "São Paulo"
         }
-      }
-    },
-    "upload_image": {
-      "data": {
-        "user/upload_image": {
-          "http_success": true,
-          "body": {
-            "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
-          }
-        }
-      }
-    },
-    "update_user": {
-      "data": {
-        "user/update": {
-          "http_success": true,
-          "body": {
-            "first_name": "John",
-            "last_name": "Wayne",
-            "cpf": "000.000.000-00",
-            "type": "inapp",
-            "gender": "Masculino",
-            "cep": "01001-000",
-            "street": "Praça da Sé",
-            "number": "s/n",
-            "neighborhood": "Sé",
-            "city": "São Paulo",
-            "state": "São Paulo"
-          }
-        }
-      }
-    },
-    "tracking": {
-      "data": {
-        "tracking": {
-          "http_success": true
-        }
+      },
+      "tracking": {
+        "http_success": true
       }
     }
   },
@@ -116,54 +72,6 @@
         "http_success": false,
         "body": {
           "message": "Invalid/incorrect request information"
-        }
-      },
-      "app/start_session": {
-        "http_success": false,
-        "body": {
-          "message": "Invalid user id"
-        }
-      },
-      "app/login": {
-        "http_success": false,
-        "body": {
-          "message": "Invalid user password"
-        }
-      },
-      "user/has_password": {
-        "http_success": false,
-        "body": {
-          "message": "Unknown error"
-        }
-      },
-      "user/forget_password": {
-        "http_success": false,
-        "body": {
-          "message": "O email informado não consta em nossa base de dados."
-        }
-      },
-      "user/register": {
-        "http_success": false,
-        "body": {
-          "message": "O email informado ja existe em nossa base de dados."
-        }
-      },
-      "user/upload_image": {
-        "http_success": false,
-        "body": {
-          "message": "Falha ao fazer upload da imagem."
-        }
-      },
-      "user/update": {
-        "http_success": false,
-        "body": {
-          "message": "Falha ao atualizar informações do usuário"
-        }
-      },
-      "tracking": {
-        "http_success": false,
-        "body": {
-          "message": "Falha ao registrar informações de tracking"
         }
       }
     }

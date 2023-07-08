@@ -150,6 +150,9 @@ class AsyncCall {
       }
 
       if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
+        if (_body != null) debugPrint("AsyncCall: body ${jsonEncode(_body)}");
+        if (_multipartBody != null) debugPrint("AsyncCall: multipart body ${jsonEncode(_multipartBody)}");
+
         final responses = await _getMockedResponse(endpoint);
         debugPrint("AsyncCall: Response ${responses.toString()}");
         return responses;

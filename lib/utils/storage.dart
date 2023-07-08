@@ -14,7 +14,19 @@ class Storage {
 
   contains(String key) async => await _storage.containsKey(key: key);
 
-  Future<T> read<T extends Model>(String key) async {
+  Future<String> readString(String key) async {
+    if (!await contains(key)) {
+      throw Exception("Storage '$key' not exist!");
+    }
+    var content = await _storage.read(key: key);
+    return content!;
+  }
+
+  Future<void> writeString(String key, String value) async {
+    await _storage.write(key: key, value: value);
+  }
+
+  Future<T> readModel<T extends Model>(String key) async {
     if (!await contains(key)) {
       throw Exception("Storage '$key' not exist!");
     }
@@ -25,7 +37,7 @@ class Storage {
     return Model.serialize(jsonDecode(content));
   }
 
-  Future<void> write<T extends Model>(String key, T value) async {
+  Future<void> writeModel<T extends Model>(String key, T value) async {
     String jsonStr = jsonEncode(Model.deserialize(value));
     await _storage.write(key: key, value: jsonStr);
   }

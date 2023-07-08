@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
-import 'package:coffee_base_app/utils/server.dart';
+import 'package:coffee_base_app/types.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'events.dart';
 import 'state.dart';
@@ -9,40 +10,35 @@ import 'state.dart';
 ///
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc() : super(AppState()) {
-    on<AppEventInitialize>((event, emit) => emit(
-          AppState(
-            appToken: event.appToken,
-            version: event.version,
-          ),
-        ));
-
-    on<AppEventFailedToInitialize>((event, emit) => emit(
-          AppState(
-            error: event.error,
-          ),
-        ));
+  AppBloc({
+    required Services services,
+    required String? errorMessage,
+  }) : super(AppState(services: services, error: errorMessage)) {
+    _initialize();
   }
 
-  void startAppChecking() async {
-    switch (await Server.appCheck()) {
-      case {"http_success": true, "body": Map<String, dynamic> body}:
-        {
-          add(AppEventInitialize(
-            appToken: body["session_token"] as String,
-            version: body["version"] as String,
-          ));
-        }
-      default:
-        {
-          add(AppEventFailedToInitialize(
-            error: "Failed to initialize application!",
-          ));
-        }
-    }
+  _initialize() {
+    on<AppEventSuccessAppCheck>(
+      (event, emit) => emit(AppState(
+        services: state.services,
+        appToken: event.appToken,
+        version: event.appVersion,
+      )),
+    );
+
+    on<AppEventFailedAppCheck>(
+      (event, emit) => emit(AppState(
+        services: state.services,
+        error: event.error,
+      )),
+    );
   }
 
-  bool hasError() {
-    return state.error != null;
+  ///
+  /// Services
+  ///
+
+  static Services services(BuildContext context) {
+    return BlocProvider.of<AppBloc>(context).state.services;
   }
 }

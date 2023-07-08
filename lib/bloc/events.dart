@@ -5,23 +5,23 @@
 class AppEvent {}
 
 ///
-/// AppEventInitialize
+/// AppEventSuccessAppCheck
 ///
 
-class AppEventInitialize extends AppEvent {
+class AppEventSuccessAppCheck extends AppEvent {
   final String appToken;
-  final String version;
-  AppEventInitialize({
+  final String appVersion;
+  AppEventSuccessAppCheck({
     required this.appToken,
-    required this.version,
+    required this.appVersion,
   }) : super();
 }
 
 ///
-/// AppEventFailedToInitialize
+/// AppEventFailedAppCheck
 ///
 
-class AppEventFailedToInitialize extends AppEvent {
+class AppEventFailedAppCheck extends AppEvent {
   final String error;
-  AppEventFailedToInitialize({required this.error});
+  AppEventFailedAppCheck({required this.error}) : super();
 }
