@@ -18,7 +18,7 @@ import 'bloc/bloc.dart';
 ///
 
 void main() async {
-  late String initialRoute;
+  String? initialRoute;
   User? userData;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,15 +36,12 @@ void main() async {
       var hasUserConfiguration = await storage.contains(userConfigurationKey);
 
       initialRoute = hasUserConfiguration ? '/Main' : '/Login';
-
-      if (hasUserConfiguration) {
-        userData = await storage.read<User>(userConfigurationKey);
-      }
+      userData = hasUserConfiguration ? await storage.read<User>(userConfigurationKey) : null;
     }),
   ]);
 
   runApp(MyApp(
-    initialRoute: initialRoute,
+    initialRoute: initialRoute!,
     userData: userData,
   ));
 }
