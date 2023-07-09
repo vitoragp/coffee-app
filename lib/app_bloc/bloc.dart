@@ -13,7 +13,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required Services services,
     required String? errorMessage,
-  }) : super(AppState(services: services, error: errorMessage)) {
+    required String? sessionToken,
+    required String? appVersion,
+  }) : super(AppState(
+          services: services,
+          sessionToken: sessionToken,
+          version: appVersion,
+          error: errorMessage,
+        )) {
     _initialize();
   }
 
@@ -21,7 +28,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppEventSuccessAppCheck>(
       (event, emit) => emit(AppState(
         services: state.services,
-        appToken: event.appToken,
+        sessionToken: event.appToken,
         version: event.appVersion,
       )),
     );

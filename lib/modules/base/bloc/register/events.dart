@@ -1,0 +1,5 @@
+///
+/// RegisterEvent
+///
+
+class RegisterEvent {}

@@ -1,0 +1,7 @@
+///
+/// RegisterState
+///
+
+class RegisterState {
+  RegisterState();
+}

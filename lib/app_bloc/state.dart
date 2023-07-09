@@ -6,13 +6,13 @@ import 'package:coffee_base_app/types.dart';
 
 class AppState {
   final Services services;
-  final String? appToken;
+  final String? sessionToken;
   final String? version;
   final String? error;
   final bool cleanUpFlag;
   AppState({
     required this.services,
-    this.appToken,
+    this.sessionToken,
     this.version,
     this.error,
     this.cleanUpFlag = false,

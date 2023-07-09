@@ -21,5 +21,5 @@ class ServerInfo {
 
 class StorageKeys {
   static const userConfiguration = "user_configuration_k";
-  static const appToken = "app_token_k";
+  static const sessionToken = "app_token_k";
 }

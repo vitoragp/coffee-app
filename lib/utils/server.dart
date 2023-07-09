@@ -19,25 +19,23 @@ class Server {
     return await AsyncCall().host("viacep.com.br").get("ws/$cep/json");
   }
 
-  ServerResponse appCheck(String? appToken) async {
-    late String model;
-    late String sn;
+  ServerResponse appCheck(String? sessionToken) async {
+    final requestBody = {};
+
+    if (sessionToken != null) {
+      requestBody["session_token"] = sessionToken;
+    }
 
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       var info = await deviceInfo.androidInfo;
-      model = info.model;
-      sn = info.serialNumber;
+      requestBody["model"] = info.model;
+      requestBody["sn"] = info.serialNumber;
     } else {
       var info = await deviceInfo.iosInfo;
-      model = info.model;
-      sn = info.identifierForVendor ?? "";
+      requestBody["model"] = info.model;
+      requestBody["sn"] = info.identifierForVendor ?? "";
     }
-
-    return await AsyncCall().host(ServerInfo.defaultHost).body({
-      "appToken": appToken ?? "",
-      "model": model,
-      "sn": sn,
-    }).post(ServerInfo.appCheckRoute);
+    return await AsyncCall().host(ServerInfo.defaultHost).body(requestBody).post(ServerInfo.appCheckRoute);
   }
 }

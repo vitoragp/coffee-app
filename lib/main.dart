@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:coffee_base_app/constants.dart';
-import 'package:coffee_base_app/data_factories/models/model_factory.dart';
-import 'package:coffee_base_app/models/user.dart';
+import 'package:coffee_base_app/data/factories/model_factory.dart';
+import 'package:coffee_base_app/data/models/user.dart';
 import 'package:coffee_base_app/modules/base/ui/pages/splash.dart';
 import 'package:coffee_base_app/routes.dart';
 import 'package:coffee_base_app/types.dart';
@@ -23,7 +23,7 @@ import 'app_bloc/bloc.dart';
 
 void main() async {
   String? initialRoute;
-  String? appToken;
+  String? sessionToken;
   String? appVersion;
   String? errorMessage;
   User? userData;
@@ -47,8 +47,8 @@ void main() async {
 
   initializeAppToken() async {
     var storage = Storage();
-    var hasAppToken = await storage.contains(StorageKeys.appToken);
-    appToken = hasAppToken ? await storage.read(StorageKeys.appToken) : null;
+    var hasSessionToken = await storage.contains(StorageKeys.sessionToken);
+    sessionToken = hasSessionToken ? await storage.read(StorageKeys.sessionToken) : null;
   }
 
   initializeInitialRouteAndUserData() async {
@@ -67,10 +67,10 @@ void main() async {
   ]);
 
   doAppCheckAndUpdateTokenAndVersion() async {
-    switch (await server.appCheck(appToken)) {
+    switch (await server.appCheck(sessionToken)) {
       case {"http_success": true, "body": Map body}:
         {
-          appToken = body["session_token"] as String;
+          sessionToken = body["session_token"] as String;
           appVersion = body["version"] as String;
         }
       case {"http_success": false, "body": Map body}:
@@ -88,7 +88,7 @@ void main() async {
   runApp(MyApp(
     initialRoute: initialRoute!,
     userData: userData,
-    appToken: appToken,
+    sessionToken: sessionToken,
     appVersion: appVersion,
     errorMessage: errorMessage,
     services: (server: server),
@@ -101,7 +101,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final String initialRoute;
-  final String? appToken;
+  final String? sessionToken;
   final String? appVersion;
   final String? errorMessage;
   final User? userData;
@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
     required this.initialRoute,
-    required this.appToken,
+    required this.sessionToken,
     required this.appVersion,
     required this.errorMessage,
     required this.userData,
@@ -120,7 +120,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AppBloc>(
-      create: (context) => AppBloc(services: services, errorMessage: errorMessage),
+      create: (context) => AppBloc(
+        services: services,
+        sessionToken: sessionToken,
+        appVersion: appVersion,
+        errorMessage: errorMessage,
+      ),
       child: MaterialApp(
         title: appName,
         theme: ThemeData(
