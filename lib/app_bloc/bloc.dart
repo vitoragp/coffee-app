@@ -26,12 +26,34 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       )),
     );
 
-    on<AppEventFailedAppCheck>(
+    on<AppEventHandleError>(
       (event, emit) => emit(AppState(
         services: state.services,
         error: event.error,
       )),
     );
+
+    on<AppEventCleanUp>(
+      (event, emit) => emit(AppState(
+        services: state.services,
+        cleanUpFlag: true,
+      )),
+    );
+  }
+
+  startSession({
+    required String appToken,
+    required String appVersion,
+  }) {
+    add(AppEventSuccessAppCheck(appToken: appToken, appVersion: appVersion));
+  }
+
+  throwError(String error) {
+    add(AppEventHandleError(error: error));
+  }
+
+  logout() {
+    add(AppEventCleanUp());
   }
 
   ///

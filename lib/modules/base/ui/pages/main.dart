@@ -1,4 +1,3 @@
-import 'package:coffee_base_app/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -10,8 +9,6 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppBloc.services(context).server;
-
     return const Scaffold(
       body: SafeArea(
         child: Center(

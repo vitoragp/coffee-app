@@ -16,7 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   login(String email, String password) async {
-    var response = await AsyncCall().host(defaultHost).body({
+    var response = await AsyncCall().host(ServerInfo.defaultHost).body({
       "email": email,
       "password": password,
     }).post("");

@@ -1,6 +1,5 @@
-import 'package:coffee_base_app/bloc/bloc.dart';
-import 'package:coffee_base_app/bloc/events.dart';
-import 'package:coffee_base_app/bloc/state.dart';
+import 'package:coffee_base_app/app_bloc/bloc.dart';
+import 'package:coffee_base_app/app_bloc/state.dart';
 import 'package:coffee_base_app/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,10 +38,7 @@ class _ErrorPageState extends State<ErrorPage> {
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
                     onPressed: () {
-                      doAppCheckAndUpdateTokenAndVersion(
-                        context,
-                        state.services,
-                      );
+                      doAppCheck(context, state.services);
                     },
                     child: const Text("Tentar novamente"),
                   ),
@@ -55,7 +51,7 @@ class _ErrorPageState extends State<ErrorPage> {
     );
   }
 
-  doAppCheckAndUpdateTokenAndVersion(
+  doAppCheck(
     BuildContext context,
     Services services,
   ) async {
@@ -63,16 +59,16 @@ class _ErrorPageState extends State<ErrorPage> {
     switch (await services.server.appCheck("")) {
       case {"http_success": true, "body": Map body}:
         {
-          bloc.add(AppEventSuccessAppCheck(
+          bloc.startSession(
             appToken: body["session_token"] as String,
             appVersion: body["version"] as String,
-          ));
+          );
         }
       case {"http_success": false, "body": Map body}:
         {
-          bloc.add(AppEventFailedAppCheck(
-            error: body["message"] as String,
-          ));
+          bloc.throwError(
+            body["message"] as String,
+          );
         }
     }
   }

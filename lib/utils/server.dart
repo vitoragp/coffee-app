@@ -34,10 +34,10 @@ class Server {
       sn = info.identifierForVendor ?? "";
     }
 
-    return await AsyncCall().host(defaultHost).body({
+    return await AsyncCall().host(ServerInfo.defaultHost).body({
       "appToken": appToken ?? "",
       "model": model,
       "sn": sn,
-    }).post(appCheckRoute);
+    }).post(ServerInfo.appCheckRoute);
   }
 }

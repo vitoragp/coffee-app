@@ -3,15 +3,17 @@
 ///
 
 const defaultMockedResponseFile = "assets/mocked_responses/mocked_json_response.json";
+
 const appName = "CoffeeApp";
 
 ///
 /// Server
 ///
 
-const defaultHost = "localhost";
-
-const appCheckRoute = "app/check";
+class ServerInfo {
+  static const defaultHost = "localhost";
+  static const appCheckRoute = "app/check";
+}
 
 ///
 /// Storage keys

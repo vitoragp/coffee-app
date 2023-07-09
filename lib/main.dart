@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:coffee_base_app/constants.dart';
+import 'package:coffee_base_app/data_factories/models/model_factory.dart';
 import 'package:coffee_base_app/models/user.dart';
 import 'package:coffee_base_app/modules/base/ui/pages/splash.dart';
 import 'package:coffee_base_app/routes.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/bloc.dart';
+import 'app_bloc/bloc.dart';
 
 ///
 /// main
@@ -47,15 +48,16 @@ void main() async {
   initializeAppToken() async {
     var storage = Storage();
     var hasAppToken = await storage.contains(StorageKeys.appToken);
-    appToken = hasAppToken ? await storage.readString(StorageKeys.appToken) : null;
+    appToken = hasAppToken ? await storage.read(StorageKeys.appToken) : null;
   }
 
   initializeInitialRouteAndUserData() async {
     var storage = Storage();
     var hasUserConfiguration = await storage.contains(StorageKeys.userConfiguration);
+    var userDataStr = hasUserConfiguration ? await storage.read(StorageKeys.userConfiguration) : null;
 
     initialRoute = hasUserConfiguration ? '/Main' : '/Login';
-    userData = hasUserConfiguration ? await storage.readModel<User>(StorageKeys.userConfiguration) : null;
+    userData = hasUserConfiguration ? ModelFactory.deserialize<User>(jsonDecode(userDataStr!)) : null;
   }
 
   await Future.wait([

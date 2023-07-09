@@ -18,10 +18,16 @@ class AppEventSuccessAppCheck extends AppEvent {
 }
 
 ///
-/// AppEventFailedAppCheck
+/// AppEventHandleError
 ///
 
-class AppEventFailedAppCheck extends AppEvent {
+class AppEventHandleError extends AppEvent {
   final String error;
-  AppEventFailedAppCheck({required this.error}) : super();
+  AppEventHandleError({required this.error}) : super();
 }
+
+///
+/// AppEventCleanUp
+///
+
+class AppEventCleanUp extends AppEvent {}

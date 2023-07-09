@@ -9,10 +9,12 @@ class AppState {
   final String? appToken;
   final String? version;
   final String? error;
+  final bool cleanUpFlag;
   AppState({
     required this.services,
     this.appToken,
     this.version,
     this.error,
+    this.cleanUpFlag = false,
   });
 }

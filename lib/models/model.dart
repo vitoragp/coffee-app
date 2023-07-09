@@ -9,8 +9,12 @@ abstract interface class Model {
     switch (T) {
       case User:
         {
-          var user = User();
-          return user as T;
+          return User(
+            id: json["id"] as String,
+            firstName: json["first_name"] as String,
+            lastName: json["last_name"] as String,
+            email: json["email"] as String,
+          ) as T;
         }
     }
     throw UnimplementedError();
@@ -20,7 +24,13 @@ abstract interface class Model {
     switch (T) {
       case User:
         {
-          Map<String, dynamic> json = {};
+          final user = model as User;
+          Map<String, dynamic> json = {
+            "id": user.id,
+            "first_name": user.firstName,
+            "last_name": user.lastName,
+            "email": user.email,
+          };
           return json;
         }
     }
