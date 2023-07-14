@@ -7,5 +7,5 @@ import 'package:bloc/bloc.dart';
 ///
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  RegisterBloc() : super(RegisterState()) {}
+  RegisterBloc() : super(RegisterState());
 }

@@ -4,6 +4,8 @@
 
 const defaultMockedResponseFile = "assets/mocked_responses/mocked_json_response.json";
 
+const headerKey = "X-Magic-Nm";
+
 const appName = "CoffeeApp";
 
 ///
@@ -12,7 +14,10 @@ const appName = "CoffeeApp";
 
 class ServerInfo {
   static const defaultHost = "localhost";
+
   static const appCheckRoute = "app/check";
+
+  static const startSessionRoute = "app/start_session";
 }
 
 ///

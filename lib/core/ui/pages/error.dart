@@ -1,5 +1,5 @@
-import 'package:coffee_base_app/app_bloc/bloc.dart';
-import 'package:coffee_base_app/app_bloc/state.dart';
+import 'package:coffee_base_app/app_controller/bloc.dart';
+import 'package:coffee_base_app/app_controller/state.dart';
 import 'package:coffee_base_app/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,7 +56,7 @@ class _ErrorPageState extends State<ErrorPage> {
     Services services,
   ) async {
     final bloc = BlocProvider.of<AppBloc>(context);
-    switch (await services.server.appCheck("")) {
+    switch (await services.server.appCheck()) {
       case {"http_success": true, "body": Map body}:
         {
           bloc.startSession(

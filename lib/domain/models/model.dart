@@ -1,4 +1,4 @@
-import 'package:coffee_base_app/data/models/user.dart';
+import 'package:coffee_base_app/domain/models/user.dart';
 
 ///
 /// Model

@@ -11,10 +11,14 @@ typedef AsyncFile = (String name, File file);
 ///
 
 class AsyncCall {
+  final AsyncCallDebugEnvironment? _testEnvironment;
+
   final Map<String, dynamic> _queries = {};
   final Map<String, dynamic> _headers = {};
 
   final List<AsyncFile> _files = [];
+
+  final void Function(String?)? _logFunction;
 
   dynamic _body;
   dynamic _multipartBody;
@@ -25,18 +29,14 @@ class AsyncCall {
   Map<String, dynamic>? _mockedData;
 
   ///
-  /// Configure test environment
-  ///
-
-  AsyncCallDebugEnvironment? get _testEnvironment {
-    return AsyncCallDebugEnvironment.instance;
-  }
-
-  ///
   /// Constructor
   ///
 
-  AsyncCall();
+  AsyncCall({
+    AsyncCallDebugEnvironment? testEnvironment,
+    void Function(String?)? logFunction,
+  })  : _testEnvironment = testEnvironment,
+        _logFunction = logFunction ?? debugPrint;
 
   ///
   /// Functions
@@ -101,19 +101,19 @@ class AsyncCall {
         if (kDebugMode) {
           var queryString = _generateQuery();
           if (queryString.isNotEmpty) {
-            debugPrint("AsyncCall: GET $_host/$endpoint?$queryString");
+            _logFunction?.call("AsyncCall: GET $_host/$endpoint?$queryString");
           } else {
-            debugPrint("AsyncCall: GET $_host/$endpoint");
+            _logFunction?.call("AsyncCall: GET $_host/$endpoint");
           }
           if (_headers.isNotEmpty) {
-            debugPrint("AsyncCall: Headers ${_headers.toString()}");
+            _logFunction?.call("AsyncCall: Headers ${_headers.toString()}");
           }
-        }
 
-        if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
-          final responses = await _getMockedResponse(endpoint);
-          debugPrint("AsyncCall: Response ${responses.toString()}");
-          return responses;
+          if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
+            final responses = await _getMockedResponse(endpoint);
+            _logFunction?.call("AsyncCall: Response ${responses.toString()}");
+            return responses;
+          }
         }
 
         try {
@@ -142,20 +142,25 @@ class AsyncCall {
 
   Future<Map<String, dynamic>> post(String endpoint) async {
     return Future(() async {
-      var queryString = _generateQuery();
-      if (queryString.isNotEmpty) {
-        debugPrint("AsyncCall: POST $_host/$endpoint?$queryString");
-      } else {
-        debugPrint("AsyncCall: POST $_host/$endpoint");
-      }
+      if (kDebugMode) {
+        var queryString = _generateQuery();
+        if (queryString.isNotEmpty) {
+          _logFunction?.call("AsyncCall: POST $_host/$endpoint?$queryString");
+        } else {
+          _logFunction?.call("AsyncCall: POST $_host/$endpoint");
+        }
+        if (_headers.isNotEmpty) {
+          _logFunction?.call("AsyncCall: Headers ${_headers.toString()}");
+        }
 
-      if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
-        if (_body != null) debugPrint("AsyncCall: body ${jsonEncode(_body)}");
-        if (_multipartBody != null) debugPrint("AsyncCall: multipart body ${jsonEncode(_multipartBody)}");
+        if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
+          if (_body != null) _logFunction?.call("AsyncCall: body ${jsonEncode(_body)}");
+          if (_multipartBody != null) _logFunction?.call("AsyncCall: multipart body ${jsonEncode(_multipartBody)}");
 
-        final responses = await _getMockedResponse(endpoint);
-        debugPrint("AsyncCall: Response ${responses.toString()}");
-        return responses;
+          final responses = await _getMockedResponse(endpoint);
+          _logFunction?.call("AsyncCall: Response ${responses.toString()}");
+          return responses;
+        }
       }
 
       _processMultipartForm(endpoint);
@@ -187,17 +192,25 @@ class AsyncCall {
 
   Future<Map<String, dynamic>> put(String endpoint) async {
     return Future(() async {
-      var queryString = _generateQuery();
-      if (queryString.isNotEmpty) {
-        debugPrint("AsyncCall: PUT $_host/$endpoint?$queryString");
-      } else {
-        debugPrint("AsyncCall: PUT $_host/$endpoint");
-      }
+      if (kDebugMode) {
+        var queryString = _generateQuery();
+        if (queryString.isNotEmpty) {
+          _logFunction?.call("AsyncCall: PUT $_host/$endpoint?$queryString");
+        } else {
+          _logFunction?.call("AsyncCall: PUT $_host/$endpoint");
+        }
+        if (_headers.isNotEmpty) {
+          _logFunction?.call("AsyncCall: Headers ${_headers.toString()}");
+        }
 
-      if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
-        final responses = await _getMockedResponse(endpoint);
-        debugPrint("AsyncCall: Response ${responses.toString()}");
-        return responses;
+        if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
+          if (_body != null) _logFunction?.call("AsyncCall: body ${jsonEncode(_body)}");
+          if (_multipartBody != null) _logFunction?.call("AsyncCall: multipart body ${jsonEncode(_multipartBody)}");
+
+          final responses = await _getMockedResponse(endpoint);
+          _logFunction?.call("AsyncCall: Response ${responses.toString()}");
+          return responses;
+        }
       }
 
       _processMultipartForm(endpoint);
@@ -229,17 +242,25 @@ class AsyncCall {
 
   Future<Map<String, dynamic>> delete(String endpoint) async {
     return Future(() async {
-      var queryString = _generateQuery();
-      if (queryString.isNotEmpty) {
-        debugPrint("AsyncCall: DELETE $_host/$endpoint?$queryString");
-      } else {
-        debugPrint("AsyncCall: DELETE $_host/$endpoint");
-      }
+      if (kDebugMode) {
+        var queryString = _generateQuery();
+        if (queryString.isNotEmpty) {
+          _logFunction?.call("AsyncCall: DELETE $_host/$endpoint?$queryString");
+        } else {
+          _logFunction?.call("AsyncCall: DELETE $_host/$endpoint");
+        }
+        if (_headers.isNotEmpty) {
+          _logFunction?.call("AsyncCall: Headers ${_headers.toString()}");
+        }
 
-      if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
-        final responses = await _getMockedResponse(endpoint);
-        debugPrint("AsyncCall: Response ${responses.toString()}");
-        return responses;
+        if (await _hasMockEnvironment() && _hasMockedEndpoint(endpoint)) {
+          if (_body != null) _logFunction?.call("AsyncCall: body ${jsonEncode(_body)}");
+          if (_multipartBody != null) _logFunction?.call("AsyncCall: multipart body ${jsonEncode(_multipartBody)}");
+
+          final responses = await _getMockedResponse(endpoint);
+          _logFunction?.call("AsyncCall: Response ${responses.toString()}");
+          return responses;
+        }
       }
 
       _processMultipartForm(endpoint);

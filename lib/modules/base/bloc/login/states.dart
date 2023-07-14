@@ -1,7 +1,0 @@
-///
-/// LoginState
-///
-
-class LoginState {
-  LoginState();
-}

@@ -1,6 +1,6 @@
-import 'package:coffee_base_app/data/factories/adapters/user_adapter.dart';
-import 'package:coffee_base_app/data/models/model.dart';
-import 'package:coffee_base_app/data/models/user.dart';
+import 'package:coffee_base_app/factories/adapters/user_adapter.dart';
+import 'package:coffee_base_app/domain/models/model.dart';
+import 'package:coffee_base_app/domain/models/user.dart';
 
 ///
 /// ModelFactory

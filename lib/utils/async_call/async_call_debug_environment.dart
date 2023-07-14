@@ -3,13 +3,6 @@
 ///
 
 class AsyncCallDebugEnvironment {
-  static AsyncCallDebugEnvironment? _instance;
-  static AsyncCallDebugEnvironment? get instance => _instance;
-  static AsyncCallDebugEnvironment? ensureInitialized({required Map<String, dynamic> module}) {
-    _instance ??= AsyncCallDebugEnvironment(module: module);
-    return _instance;
-  }
-
   final Map<String, dynamic>? _module;
   final String? _activeModuleWithUseCase;
 
