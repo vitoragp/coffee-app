@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:coffee_base_app/factories/model_factory.dart';
 import 'package:coffee_base_app/domain/models/user.dart';
 import 'package:coffee_base_app/utils/server.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'events.dart';
 import 'states.dart';
-import 'package:bloc/bloc.dart';
 
 ///
 /// LoginBloc
@@ -63,5 +64,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           add(LoginEventError(message: body["message"] as String));
         }
     }
+  }
+
+  ///
+  /// of
+  ///
+
+  static LoginBloc of(BuildContext context, {bool listen = false}) {
+    return BlocProvider.of(context, listen: listen);
   }
 }

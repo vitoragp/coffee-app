@@ -36,7 +36,7 @@ class AsyncCall {
     AsyncCallDebugEnvironment? testEnvironment,
     void Function(String?)? logFunction,
   })  : _testEnvironment = testEnvironment,
-        _logFunction = logFunction ?? debugPrint;
+        _logFunction = logFunction;
 
   ///
   /// Functions

@@ -1,3 +1,5 @@
+import 'package:coffee_base_app/domain/models/user.dart';
+
 ///
 /// AppEvent
 ///
@@ -27,10 +29,19 @@ final class AppEventThrowError extends AppEvent {
 }
 
 ///
-/// AppEventCleanUp
+/// AppEventLogin
 ///
 
-final class AppEventCleanUp extends AppEvent {}
+final class AppEventLogin extends AppEvent {
+  final User user;
+  AppEventLogin({required this.user});
+}
+
+///
+/// AppEventLogout
+///
+
+final class AppEventLogout extends AppEvent {}
 
 ///
 /// AppEventSetConnectionState

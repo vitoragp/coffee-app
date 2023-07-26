@@ -14,8 +14,10 @@
       "user/login": {
         "http_success": true,
         "body": {
+          "id": "1",
           "email": "john@email.com",
-          "first_name": "john",
+          "first_name": "John",
+          "last_name": "Wayne",
           "image_url": "https://randomuser.me/api/portraits/men/63.jpg"
         }
       },

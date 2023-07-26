@@ -1,6 +1,7 @@
 import 'package:coffee_base_app/app_controller/bloc.dart';
 import 'package:coffee_base_app/app_controller/state.dart';
-import 'package:coffee_base_app/types.dart';
+import 'package:coffee_base_app/services.dart';
+import 'package:coffee_base_app/utils/server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,10 @@ class ErrorPage extends StatefulWidget {
     return _ErrorPageState();
   }
 }
+
+///
+/// _ErrorPageState
+///
 
 class _ErrorPageState extends State<ErrorPage> {
   @override
@@ -38,7 +43,7 @@ class _ErrorPageState extends State<ErrorPage> {
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
                     onPressed: () {
-                      doAppCheck(context, state.services);
+                      doAppCheck(context, Services.of(context).server);
                     },
                     child: const Text("Tentar novamente"),
                   ),
@@ -53,13 +58,14 @@ class _ErrorPageState extends State<ErrorPage> {
 
   doAppCheck(
     BuildContext context,
-    Services services,
+    Server server,
   ) async {
     final bloc = BlocProvider.of<AppBloc>(context);
-    switch (await services.server.appCheck()) {
+    switch (await server.appCheck()) {
       case {"http_success": true, "body": Map body}:
         {
           bloc.startSession(
+            context,
             appToken: body["session_token"] as String,
             appVersion: body["version"] as String,
           );

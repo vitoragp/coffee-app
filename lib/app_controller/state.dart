@@ -1,4 +1,4 @@
-import 'package:coffee_base_app/types.dart';
+import 'package:coffee_base_app/domain/models/user.dart';
 import 'package:coffee_base_app/utils/platform.dart';
 
 ///
@@ -6,8 +6,8 @@ import 'package:coffee_base_app/utils/platform.dart';
 ///
 
 class AppState {
-  final Services services;
   final DeviceInfo deviceInfo;
+  final User? user;
   final String? sessionToken;
   final String? version;
   final String? error;
@@ -15,8 +15,8 @@ class AppState {
   final bool connectionFlag;
 
   AppState({
-    required this.services,
     required this.deviceInfo,
+    this.user,
     this.sessionToken,
     this.version,
     this.error,
@@ -25,8 +25,8 @@ class AppState {
   });
 
   AppState copyWith({
-    final Services? services,
     final DeviceInfo? deviceInfo,
+    final User? user,
     final String? sessionToken,
     final String? version,
     final String? error,
@@ -34,8 +34,8 @@ class AppState {
     final bool? connectionFlag,
   }) {
     return AppState(
-      services: services ?? this.services,
       deviceInfo: deviceInfo ?? this.deviceInfo,
+      user: user ?? this.user,
       sessionToken: sessionToken ?? this.sessionToken,
       version: version ?? this.version,
       error: error ?? this.error,

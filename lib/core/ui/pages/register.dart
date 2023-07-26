@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return const Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text("Login page"),
+          child: Text("Register page"),
         ),
       ),
     );

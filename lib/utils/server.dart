@@ -84,6 +84,6 @@ class Server {
     ).host(ServerInfo.defaultHost).body({
       "username": userName,
       "password": password,
-    }).post(ServerInfo.startSessionRoute);
+    }).post(ServerInfo.loginRoute);
   }
 }

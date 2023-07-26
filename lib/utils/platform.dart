@@ -6,10 +6,15 @@ import 'package:device_info_plus/device_info_plus.dart';
 /// Typedef
 ///
 
-typedef DeviceInfo = ({
-  String model,
-  String sn,
-});
+class DeviceInfo {
+  DeviceInfo({
+    required this.model,
+    required this.sn,
+  });
+
+  String model;
+  String sn;
+}
 
 ///
 /// getModelAndSN
@@ -29,7 +34,7 @@ Future<DeviceInfo> getDeviceInformation() async {
     sn = info.identifierForVendor ?? "";
   }
   return Future(
-    () => (
+    () => DeviceInfo(
       model: model,
       sn: sn,
     ),
