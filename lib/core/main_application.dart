@@ -26,6 +26,8 @@ class Application {
     this.debugModule,
     this.skipStorageData,
     this.skipDeviceInformation,
+    this.debugModuleFile,
+    this.setupSpecificModules,
     Function(String?)? logFunction,
   }) : _logFunction = logFunction ?? ((_) {});
 
@@ -33,6 +35,8 @@ class Application {
   final bool? skipStorageData;
   final bool? skipDeviceInformation;
   final String? debugModule;
+  final String? debugModuleFile;
+  final Map<String, String>? setupSpecificModules;
 
   final void Function(String?) _logFunction;
 
@@ -117,9 +121,14 @@ class Application {
 
   Future<void> _initializeDebugEnvironment() async {
     if (kDebugMode && enableDebugMode == true && debugModule != null) {
-      var content = await rootBundle.loadString(defaultMockedResponseFile);
+      var content = await rootBundle.loadString(debugModuleFile ?? defaultMockedResponseFile);
       var mockedModule = jsonDecode(content);
-      _testEnvironment = AsyncCallDebugEnvironment(module: mockedModule[debugModule]);
+
+      _testEnvironment = AsyncCallDebugEnvironment(
+        module: mockedModule,
+        activeModuleWithUseCase: debugModule,
+        specificUseCases: setupSpecificModules,
+      );
     }
   }
 

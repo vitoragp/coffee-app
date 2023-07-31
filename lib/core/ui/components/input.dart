@@ -41,6 +41,8 @@ class Input extends StatelessWidget {
         onChanged: (value) => onChange?.call(value),
         obscureText: obscureText,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColors.white,
           hintText: placeholder,
           hintStyle: const TextStyle(color: AppColors.greyC1),
           contentPadding: padding,

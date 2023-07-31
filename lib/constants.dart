@@ -47,7 +47,7 @@ class AppColors {
   static const greyC2 = Color(0xFF333333);
 
   static const white = Color(0xFFFFFFFF);
-  static const dark = Color(0xFF000000);
+  static const black = Color(0xFF000000);
 }
 
 ///
@@ -57,6 +57,7 @@ class AppColors {
 class AppRoutes {
   static const register = "/register";
   static const login = "/login";
+  static const forgotPassword = "/forgot_password";
   static const main = "/main";
   static const error = "/error";
 }

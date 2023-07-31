@@ -25,9 +25,43 @@ void main() {
         await tester.enterText(find.byKey(const ValueKey("EmailTextField")), "email@email.com");
         await tester.enterText(find.byKey(const ValueKey("PasswordTextField")), "12345678");
 
+        await tester.ensureVisible(find.byKey(const ValueKey("LoginButton"), skipOffstage: false));
         await tester.tap(find.byKey(const ValueKey("LoginButton")));
 
         await tester.pumpAndSettle();
+
+        expect(find.byKey(const ValueKey("MainPage")), findsOneWidget);
+      });
+    });
+
+    testWidgets('Login fail', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        final app = Application(
+          enableDebugMode: true,
+          skipStorageData: true,
+          debugModule: "success",
+          setupSpecificModules: <String, String>{
+            "user/login": "error",
+          },
+        );
+        await app.initialize();
+
+        await tester.pumpWidget(app.build());
+
+        expect(find.byKey(const ValueKey("LoginPage")), findsOneWidget);
+        expect(find.byKey(const ValueKey("EmailTextField")), findsOneWidget);
+        expect(find.byKey(const ValueKey("PasswordTextField")), findsOneWidget);
+        expect(find.byKey(const ValueKey("LoginButton")), findsOneWidget);
+
+        await tester.enterText(find.byKey(const ValueKey("EmailTextField")), "email@email.com");
+        await tester.enterText(find.byKey(const ValueKey("PasswordTextField")), "12345678");
+
+        await tester.ensureVisible(find.byKey(const ValueKey("LoginButton")));
+        await tester.tap(find.byKey(const ValueKey("LoginButton")));
+
+        await tester.pumpAndSettle();
+
+        expect(find.text("Usuário ou senha invalidos!"), findsOneWidget);
       });
     });
 
@@ -45,6 +79,23 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byKey(const ValueKey("RegisterPage")), findsOneWidget);
+      });
+    });
+
+    testWidgets('Redirect: Login to forgot password', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        final app = Application(enableDebugMode: true, skipStorageData: true, debugModule: "success");
+        await app.initialize();
+
+        await tester.pumpWidget(app.build());
+
+        expect(find.byKey(const ValueKey("LoginPage")), findsOneWidget);
+
+        await tester.tap(find.byKey(const ValueKey("ForgotPasswordLink")));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const ValueKey("ForgotPasswordPage")), findsOneWidget);
       });
     });
   });

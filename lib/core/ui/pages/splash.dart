@@ -1,3 +1,4 @@
+import 'package:coffee_base_app/constants.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -10,6 +11,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: AppColors.yellowL1,
       body: SafeArea(
         child: Center(
           child: Text("Splash page"),

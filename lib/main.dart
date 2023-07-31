@@ -14,6 +14,5 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-
   await app.initializeAndStart();
 }
